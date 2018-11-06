@@ -1,2 +1,2 @@
-# Note
+# Scripts
 There are many notes.
