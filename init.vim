@@ -4,6 +4,7 @@ if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
 				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
 let g:nvim_plugins_installation_completed=1
 
 
@@ -31,12 +32,49 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set signcolumn=yes
+map <C-a> <HOME>
+map <C-e> <END>
+
 
 
 filetype on
 filetype indent on
 filetype plugin on
 filetype plugin indent on
+
+
+" 分屏设置
+noremap su :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
+noremap se :set splitbelow<CR>:split<CR>
+noremap sn :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
+noremap si :set splitright<CR>:vsplit<CR>
+
+
+" 修改分屏大小
+noremap <up> :res +5<CR>
+noremap <down> :res -5<CR>
+noremap <left> :vertical resize-5<CR>
+noremap <right> :vertical resize+5<CR>
+" 退出分屏操作
+noremap <LEADER>q <C-w>j:q<CR>
+
+
+" ==================== Tab management ====================
+" Create a new tab with tu
+noremap tu :tabe<CR>
+noremap tU :tab split<CR>
+" Move around tabs with tn and ti
+noremap <C-j> :-tabnext<CR>
+noremap <C-k> :+tabnext<CR>
+" Move the tabs with tmn and tmi
+noremap tmn :-tabmove<CR>
+noremap tmi :+tabmove<CR>
+
+
+
+" Ranger
+map ra :Ranger<CR>
+
 
 
 " == fzf
@@ -64,13 +102,13 @@ inoremap <C-l> <right>
 
 
 " == 主题配置
-let g:airline_theme='material'
-set t_Co=256
-set termguicolors
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-set background=light    " Setting dark mode
-colorscheme vim-material
+"let g:airline_theme='material'
+"set t_Co=256
+"set termguicolors
+"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+"set background=light    " Setting dark mode
+colorscheme deus
 "au GUIEnter * call libcallnr("vimtweak.dll", "SetAlpha", 234)
 
 " ===
@@ -134,11 +172,11 @@ let g:coc_global_extensions = [
 	\ 'coc-yaml',
 	\ 'coc-yank']
 
-inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+"inoremap <silent><expr> <TAB>
+"      \ coc#pum#visible() ? coc#pum#next(1) :
+"      \ CheckBackspace() ? "\<Tab>" :
+"      \ coc#refresh()
+"inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -148,16 +186,32 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-signify'
 Plug 'ajmwagar/vim-deus'
+
+
+" 目录插件
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
+
+
+
+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'hzchirs/vim-material'
 Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 Plug 'thanethomson/vim-jenkinsfile'
+
 "模糊查询插件
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } "极限搜索文件
 Plug 'junegunn/fzf.vim'
-"Plug 'hzchirs/vim-material'
+Plug 'dkarter/bullets.vim'
+"ranger
+Plug 'francoiscabrol/ranger.vim'
+
+
+
+"给字符串快速添加双引号
+Plug 'tpope/vim-surround'
 call plug#end()
 
 
