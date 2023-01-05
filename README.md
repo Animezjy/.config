@@ -1,2 +1,2 @@
-# Scripts
-There are many notes.
+# Neovim Config
+Neovim config
