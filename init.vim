@@ -31,6 +31,8 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
+set viewoptions=cursor,folds,slash,unix
+
 set clipboard=unnamed                    " 共享剪切板
 set signcolumn=yes
 map <C-a> <HOME>
@@ -73,9 +75,32 @@ noremap tmi :+tabmove<CR>
 
 
 " Ranger
-let g:rnvimr_ex_enable = 1   
 
-map ra :Ranger<CR>
+
+
+" ==================== rnvimr ====================
+let g:rnvimr_ex_enable = 1
+let g:rnvimr_pick_enable = 1
+let g:rnvimr_draw_border = 0
+" let g:rnvimr_bw_enable = 1
+highlight link RnvimrNormal CursorLine
+nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
+let g:rnvimr_action = {
+            \ '<C-t>': 'NvimEdit tabedit',
+            \ '<C-x>': 'NvimEdit split',
+            \ '<C-v>': 'NvimEdit vsplit',
+            \ 'gw': 'JumpNvimCwd',
+            \ 'yw': 'EmitRangerCwd'
+            \ }
+let g:rnvimr_layout = { 'relative': 'editor',
+            \ 'width': &columns,
+            \ 'height': &lines,
+            \ 'col': 0,
+            \ 'row': 0,
+            \ 'style': 'minimal' }
+let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
+
+
 
 
 
@@ -113,50 +138,64 @@ let g:airline#extensions#tabline#enabled = 1
 " == 主题配置
 colorscheme deus
 
-" === NERDTree
-map ff :NERDTreeToggle<CR>
-"打开文件默认开启文件树
-"autocmd VimEnter * NERDTree
-let NERDTreeChDirMode=2                                         " 设置当前目录为nerdtree的起始目录
-let NERDChristmasTree=1                                         " 使得窗口有更好看的效果
-let NERDTreeMouseMode=1                                         " 双击鼠标左键打开文件
-let NERDTreeWinSize=25                                          " 设置窗口宽度为25
-let NERDTreeQuitOnOpen=1                                        " 打开一个文件时nerdtree分栏自动关闭
+"" === NERDTree
+""map ff :NERDTreeToggle<CR>
+""打开文件默认开启文件树
+""autocmd VimEnter * NERDTree
+"let NERDTreeChDirMode=2                                         " 设置当前目录为nerdtree的起始目录
+"let NERDChristmasTree=1                                         " 使得窗口有更好看的效果
+"let NERDTreeMouseMode=1                                         " 双击鼠标左键打开文件
+"let NERDTreeWinSize=25                                          " 设置窗口宽度为25
+"let NERDTreeQuitOnOpen=1                                        " 打开一个文件时nerdtree分栏自动关闭
+"
+"
+"
+"
+"
+"let NERDTreeMapOpenExpl = ""
+"let NERDTreeMapUpdir = ""
+"let NERDTreeMapUpdirKeepOpen = "l"
+"let NERDTreeMapOpenSplit = ""
+"let NERDTreeOpenVSplit = ""
+"let NERDTreeMapActivateNode = "i"
+"let NERDTreeMapOpenInTab = "o"
+"let NERDTreeMapPreview = ""
+"let NERDTreeMapCloseDir = "n"
+"let NERDTreeMapChangeRoot = "y"
+
+
+" coc-explorer
+
+
+
+
+" coc-explorer
+nmap ff <Cmd>CocCommand explorer<CR>
 
 
 
 
 
-let NERDTreeMapOpenExpl = ""
-let NERDTreeMapUpdir = ""
-let NERDTreeMapUpdirKeepOpen = "l"
-let NERDTreeMapOpenSplit = ""
-let NERDTreeOpenVSplit = ""
-let NERDTreeMapActivateNode = "i"
-let NERDTreeMapOpenInTab = "o"
-let NERDTreeMapPreview = ""
-let NERDTreeMapCloseDir = "n"
-let NERDTreeMapChangeRoot = "y"
 
-
-" ==
-" == NERDTree-git
-" ==
-let g:NERDTreeGitStatusIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
-    \ }
+"" ==
+"" == NERDTree-git
+"" ==
+"let g:NERDTreeGitStatusIndicatorMapCustom = {
+"    \ "Modified"  : "✹",
+"    \ "Staged"    : "✚",
+"    \ "Untracked" : "✭",
+"    \ "Renamed"   : "➜",
+"    \ "Unmerged"  : "═",
+"    \ "Deleted"   : "✖",
+"    \ "Dirty"     : "✗",
+"    \ "Clean"     : "✔︎",
+"    \ "Unknown"   : "?"
+"    \ }
 
 " ==================== coc.nvim ====================
 let g:coc_global_extensions = [
 	\ 'coc-css',
+	\ 'coc-explorer',
 	\ 'coc-go',
 	\ 'coc-diagnostic',
 	\ 'coc-docker',
@@ -230,11 +269,10 @@ endfunc
  func SetPythonTitle()
   call setline(1,"# Copyright (c) Animezjy  All Rights Reserved.")
   call append(line("."), "\# File Name: ".("%"))
-  call append(line(".")+1, "\# Author: Stiles Yu")
-  call append(line(".")+2, "\# mail: yuxiaochen886@gmail.com")
-  call append(line(".")+3,"\# github:https://github.com/Stilesyu")
-  call append(line(".")+4,"\# blog:http://www.stilesyu.com/")
-  call append(line(".")+5, "\# Created Time: ".strftime("%Y-%m-%d",localtime()))
+  call append(line(".")+1, "\# Author: zhangjiyou")
+  call append(line(".")+2, "\# mail: z879423371@163.com")
+  call append(line(".")+3,"\# github:https://github.com/Animezjy")
+  call append(line(".")+4, "\# Created Time: ".strftime("%Y-%m-%d",localtime()))
  endfunc
 
 
