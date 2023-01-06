@@ -31,9 +31,9 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
+set clipboard=unnamed                    " 共享剪切板
 set signcolumn=yes
 map <C-a> <HOME>
-map <C-e> <END>
 
 
 
@@ -64,8 +64,8 @@ noremap <LEADER>q <C-w>j:q<CR>
 noremap tu :tabe<CR>
 noremap tU :tab split<CR>
 " Move around tabs with tn and ti
-noremap <C-j> :-tabnext<CR>
-noremap <C-k> :+tabnext<CR>
+noremap ti :-tabnext<CR>
+noremap tn :+tabnext<CR>
 " Move the tabs with tmn and tmi
 noremap tmn :-tabmove<CR>
 noremap tmi :+tabmove<CR>
@@ -73,6 +73,8 @@ noremap tmi :+tabmove<CR>
 
 
 " Ranger
+let g:rnvimr_ex_enable = 1   
+
 map ra :Ranger<CR>
 
 
@@ -81,8 +83,8 @@ map ra :Ranger<CR>
 let g:fzf_preview_window = 'right:40%'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
-nnoremap <leader>fo :Files<CR>
-nnoremap <leader>fif :Ag<CR> 
+nnoremap <C-p> :Files<CR>
+nnoremap <C-e> :Buffers<CR>
 
 noremap J 5j
 noremap K 5k
@@ -101,20 +103,30 @@ inoremap <C-k> <up>
 inoremap <C-l> <right>
 
 
-" == 主题配置
-"let g:airline_theme='material'
-"set t_Co=256
-"set termguicolors
-"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-"set background=light    " Setting dark mode
-colorscheme deus
-"au GUIEnter * call libcallnr("vimtweak.dll", "SetAlpha", 234)
+" airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 
-" ===
+
+
+
+" == 主题配置
+colorscheme deus
+
 " === NERDTree
-" ===
 map ff :NERDTreeToggle<CR>
+"打开文件默认开启文件树
+"autocmd VimEnter * NERDTree
+let NERDTreeChDirMode=2                                         " 设置当前目录为nerdtree的起始目录
+let NERDChristmasTree=1                                         " 使得窗口有更好看的效果
+let NERDTreeMouseMode=1                                         " 双击鼠标左键打开文件
+let NERDTreeWinSize=25                                          " 设置窗口宽度为25
+let NERDTreeQuitOnOpen=1                                        " 打开一个文件时nerdtree分栏自动关闭
+
+
+
+
+
 let NERDTreeMapOpenExpl = ""
 let NERDTreeMapUpdir = ""
 let NERDTreeMapUpdirKeepOpen = "l"
@@ -172,14 +184,62 @@ let g:coc_global_extensions = [
 	\ 'coc-yaml',
 	\ 'coc-yank']
 
-"inoremap <silent><expr> <TAB>
-"      \ coc#pum#visible() ? coc#pum#next(1) :
-"      \ CheckBackspace() ? "\<Tab>" :
-"      \ coc#refresh()
-"inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+
+
+" 自动编译文件
+map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+        exec "w"
+        if &filetype == 'c'
+                exec "!g++ % -o %<"
+                exec "!time ./%<"
+        elseif &filetype == 'cpp'
+                exec "!g++ % -o %<"
+                exec "!time ./%<"
+        elseif &filetype == 'java'
+                exec "!javac %"
+                exec "!time java %<"
+        elseif &filetype == 'sh'
+                :!time bash %
+        elseif &filetype == 'python'
+                exec "!clear":
+                exec "!time python3 %"
+        elseif &filetype == 'html'
+                exec "!firefox % &"
+        elseif &filetype == 'go'
+                " exec "!go build %<"
+                exec "!time go run %"
+        elseif &filetype == 'mkd'
+                exec "!~/.vim/markdown.pl % > %.html &"
+                exec "!firefox %.html &"
+        endif
+endfunc
+
+
+" Python自动插入文件标题
+ autocmd BufNewFile *py exec ":call SetPythonTitle()"
+ func SetPythonTitle()
+  call setline(1,"# Copyright (c) Animezjy  All Rights Reserved.")
+  call append(line("."), "\# File Name: ".("%"))
+  call append(line(".")+1, "\# Author: Stiles Yu")
+  call append(line(".")+2, "\# mail: yuxiaochen886@gmail.com")
+  call append(line(".")+3,"\# github:https://github.com/Stilesyu")
+  call append(line(".")+4,"\# blog:http://www.stilesyu.com/")
+  call append(line(".")+5, "\# Created Time: ".strftime("%Y-%m-%d",localtime()))
+ endfunc
+
+
+
+
 
 
 call plug#begin('~/.config/nvim/plugged')
@@ -188,12 +248,12 @@ Plug 'mhinz/vim-signify'
 Plug 'ajmwagar/vim-deus'
 
 
+
+Plug 'mhinz/vim-startify'
+
 " 目录插件
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-
-
-
 
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -205,29 +265,25 @@ Plug 'thanethomson/vim-jenkinsfile'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } "极限搜索文件
 Plug 'junegunn/fzf.vim'
 Plug 'dkarter/bullets.vim'
+
 "ranger
 Plug 'francoiscabrol/ranger.vim'
 
+"代码片段补全
+Plug 'honza/vim-snippets'
+
+" Treesitter
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/playground'
 
 
 "给字符串快速添加双引号
 Plug 'tpope/vim-surround'
+
+
+" markdown自动预览
+Plug 'iamcco/markdown-preview.nvim'
+
 call plug#end()
 
 
-" ==================== Terminal Colors ====================
-let g:terminal_color_0  = '#000000'
-let g:terminal_color_1  = '#FF5555'
-let g:terminal_color_2  = '#50FA7B'
-let g:terminal_color_3  = '#F1FA8C'
-let g:terminal_color_4  = '#BD93F9'
-let g:terminal_color_5  = '#FF79C6'
-let g:terminal_color_6  = '#8BE9FD'
-let g:terminal_color_7  = '#BFBFBF'
-let g:terminal_color_8  = '#4D4D4D'
-let g:terminal_color_9  = '#FF6E67'
-let g:terminal_color_10 = '#5AF78E'
-let g:terminal_color_11 = '#F4F99D'
-let g:terminal_color_12 = '#CAA9FA'
-let g:terminal_color_13 = '#FF92D0'
-let g:terminal_color_14 = '#9AEDFE'
