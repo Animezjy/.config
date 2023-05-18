@@ -3,8 +3,6 @@ packer.startup({
   function(use)
     -- Packer 可以管理自己本身
     use 'wbthomason/packer.nvim'
-    -- tokyonight
-    use('folke/tokyonight.nvim')
     -- nvim-tree
     use {
       'nvim-tree/nvim-tree.lua',
@@ -15,6 +13,9 @@ packer.startup({
         require("nvim-tree").setup {}
       end
     }
+   -- 主题配置
+   -- tokyonight
+   use('folke/tokyonight.nvim')
 
    -- bufferline 
    use({ "akinsho/bufferline.nvim", requires = { "kyazdani42/nvim-web-devicons", "moll/vim-bbye" }})
@@ -32,8 +33,32 @@ packer.startup({
     use({ "williamboman/mason.nvim" })
     use({ "williamboman/mason-lspconfig.nvim" })
     use({ "neovim/nvim-lspconfig" })
-    -- Lspconfig
-    --use("williamboman/nvim-lsp-installer")
+    use("hrsh7th/nvim-cmp")
+    use("saadparwaiz1/cmp_luasnip")
+    use("hrsh7th/cmp-vsnip")
+    use("hrsh7th/cmp-nvim-lsp") -- { name = nvim_lsp }
+    use("hrsh7th/cmp-buffer") -- { name = 'buffer' },
+    use("hrsh7th/cmp-path") -- { name = 'path' }
+    use("hrsh7th/cmp-cmdline") -- { name = 'cmdline' }
+    use("hrsh7th/cmp-nvim-lsp-signature-help") -- { name = 'nvim_lsp_signature_help' }
+        -- 常见编程语言代码段
+    use("rafamadriz/friendly-snippets")
+    -- UI 增强
+    use("onsails/lspkind-nvim")
+    use("tami5/lspsaga.nvim")
+    -- 代码格式化
+    use("mhartington/formatter.nvim")
+    use({ "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" })
+    -- TypeScript 增强
+    use({ "jose-elias-alvarez/nvim-lsp-ts-utils", requires = "nvim-lua/plenary.nvim" })
+    use("jose-elias-alvarez/typescript.nvim")
+
+    -- Lua 增强
+    use("folke/neodev.nvim")
+    -- JSON 增强
+    use("b0o/schemastore.nvim")
+    -- Rust 增强
+    use("simrat39/rust-tools.nvim")
 
 
 
