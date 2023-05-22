@@ -41,6 +41,8 @@ packer.startup({
     use("hrsh7th/cmp-path") -- { name = 'path' }
     use("hrsh7th/cmp-cmdline") -- { name = 'cmdline' }
     use("hrsh7th/cmp-nvim-lsp-signature-help") -- { name = 'nvim_lsp_signature_help' }
+    use 'L3MON4D3/LuaSnip' -- Snippets plugin
+
         -- 常见编程语言代码段
     use("rafamadriz/friendly-snippets")
     -- UI 增强
