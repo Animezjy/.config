@@ -1,2 +1,3 @@
-# nvim配置
-NeoConfig
+# README
+
+# 基于NvChad项目的个人Neovim配置

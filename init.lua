@@ -1,21 +1,21 @@
--- 基础配置
-require("basic")
--- Packer插件管理
-require("plugins")
--- 快捷键映射
-require("keybindings")
--- 主题设置 （新增）
-require("colorscheme")
+require "core"
 
--- 插件配置
-require("plugin-config.nvim-tree")
-require("plugin-config.lualine")
-require("plugin-config.telescope")
-require("plugin-config.dashboard")
-require("plugin-config.project")
-require("plugin-config.nvim-treesitter")
+local custom_init_path = vim.api.nvim_get_runtime_file("lua/custom/init.lua", false)[1]
 
--- 内置LSP
-require("lsp.setup")
--- 代码补全
-require("lsp.cmp")
+if custom_init_path then
+  dofile(custom_init_path)
+end
+
+require("core.utils").load_mappings()
+
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+
+-- bootstrap lazy.nvim!
+if not vim.loop.fs_stat(lazypath) then
+  require("core.bootstrap").gen_chadrc_template()
+  require("core.bootstrap").lazy(lazypath)
+end
+
+dofile(vim.g.base46_cache .. "defaults")
+vim.opt.rtp:prepend(lazypath)
+require "plugins"
