@@ -1,3 +1,3 @@
-# README
+# Nvim Config
 
-# 基于NvChad项目的个人Neovim配置
+纯Lua配置的现代化Neovim配置

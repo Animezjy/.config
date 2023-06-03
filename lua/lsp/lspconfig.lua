@@ -1,12 +1,11 @@
-local on_attach = require("plugins.configs.lspconfig").on_attach
-local capabilities = require("plugins.configs.lspconfig").capabilities
+-- local on_attach = require("lspconfig").on_attach
+-- local capabilities = require("lspconfig").capabilities
 local lspconfig = require "lspconfig"
 local util = require "lspconfig/util"
 
-
 lspconfig.gopls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
+  -- on_attach = on_attach,
+  -- capabilities = capabilities,
   cmd = {"gopls"},
   filetypes = { "go", "gomod", "gowork", "gotmpl" },
   root_dir = util.root_pattern("go.work","go.mod",".git"),
@@ -22,8 +21,8 @@ lspconfig.gopls.setup {
 }
 
 lspconfig.pyright.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
+  -- on_attach = on_attach,
+  -- capabilities = capabilities,
   cmd = { "pyright-langserver", "--stdio" },
   filetypes = { "python" },
   python = {
@@ -35,3 +34,4 @@ lspconfig.pyright.setup {
     }
   },
 }
+
