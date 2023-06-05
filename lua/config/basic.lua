@@ -47,7 +47,9 @@ vim.o.whichwrap = '<,>,[,]'
 -- 允许隐藏被修改过的buffer
 vim.o.hidden = true
 -- 鼠标支持
-vim.o.mouse = "a"
+vim.opt.mouse:append("a")
+-- 系统剪贴板
+vim.opt.clipboard:append("unnamedplus")
 -- 禁止创建备份文件
 vim.o.backup = false
 vim.o.writebackup = false
@@ -78,4 +80,7 @@ vim.o.pumheight = 10
 vim.o.showtabline = 2
 -- 使用增强状态栏插件后不再需要 vim 的模式提示
 vim.o.showmode = false
+
+
+
 

@@ -28,6 +28,10 @@ map("t", "<C-j>", [[ <C-\><C-N><C-w>j ]], opt)
 map("t", "<C-k>", [[ <C-\><C-N><C-w>k ]], opt)
 map("t", "<C-l>", [[ <C-\><C-N><C-w>l ]], opt)
 
+-- 缓冲区相关
+map("n", "<leader>x", ":bd<CR>", opt)
+
+
 -- visual模式下缩进代码
 map("v", "<", "<gv", opt)
 map("v", ">", ">gv", opt)
@@ -39,10 +43,8 @@ map("n", "K", "4k", opt)
 map("n", "s,", ":vertical resize -10<CR>", opt)
 map("n", "s.", ":vertical resize +10<CR>", opt)
 -- 上下比例
-map("n", "sj", ":resize +10<CR>", opt)
-map("n", "sk", ":resize -10<CR>", opt)
-map("n", "<C-Down>", ":resize +2<CR>", opt)
-map("n", "<C-Up>", ":resize -2<CR>", opt)
+map("n", "sj", ":resize +5<CR>", opt)
+map("n", "sk", ":resize -5<CR>", opt)
 -- 等比例
 map("n", "s=", "<C-w>=", opt)
 
@@ -51,19 +53,16 @@ map("n", "s=", "<C-w>=", opt)
 -- ctrl u / ctrl + d  只移动9行，默认移动半屏
 map("n", "<C-u>", "9k", opt)
 map("n", "<C-d>", "9j", opt)
--- 在visual 模式里粘贴不要复制
-map("v", "p", '"_dP', opt)
 
 -- 退出
 map("n", "Q", ":q!<CR>", opt)
 map("n", "S", ":x<CR>", opt)
 
--- insert 模式下，跳到行首行尾
-map("i", "<C-h>", "<ESC>I", opt)
-map("i", "<C-l>", "<ESC>A", opt)
 
+-- nvim-tree
+map("n", "<C-n>", ":NvimTreeToggle<CR>", opt)
 
-
+ 
 -- bufferline
 -- 左右Tab切换
 map("n", "<leader>th", ":BufferLineCyclePrev<CR>", opt)
@@ -87,8 +86,6 @@ map("n", "<leader>fw", ":Telescope live_grep<CR>", opt)
 
 -- 格式化代码
 map("n", "M", ":Black<CR>", opt)
-
-
 
 
 
@@ -116,18 +113,23 @@ pluginKeys.telescopeList = {
 
 -- nvim-cmp 自动补全
 pluginKeys.cmp = function(cmp)
+  local feedkey = function(key, mode)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+  end
+
+  local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  end
+
     return {
         -- 出现补全
-        ["<C-.>"] = cmp.mapping(cmp.mapping.complete(), {"i", "c"}),
+        ["<A-.>"] = cmp.mapping(cmp.mapping.complete(), {"i", "c"}),
         -- 取消
-        ["<C-,>"] = cmp.mapping({
+        ["<A-,>"] = cmp.mapping({
             i = cmp.mapping.abort(),
             c = cmp.mapping.close()
         }),
-        -- 上一个
-        ["<C-k>"] = cmp.mapping.select_prev_item(),
-        -- 下一个
-        ["<C-j>"] = cmp.mapping.select_next_item(),
         -- 确认
         ["<CR>"] = cmp.mapping.confirm({
             select = true,
@@ -136,9 +138,28 @@ pluginKeys.cmp = function(cmp)
         -- 如果窗口内容太多，可以滚动
         ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), {"i", "c"}),
         ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), {"i", "c"}),
+         -- Super Tab
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif vim.fn["vsnip#available"](1) == 1 then
+            feedkey("<Plug>(vsnip-expand-or-jump)", "")
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+          end
+        end, {"i", "s"}),
+
+        ["<S-Tab>"] = cmp.mapping(function()
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+            feedkey("<Plug>(vsnip-jump-prev)", "")
+          end
+        end, {"i", "s"})
     }
 end
-
 
 
 return pluginKeys

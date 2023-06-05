@@ -20,6 +20,7 @@ require("lazy").setup({
   'nvim-lua/plenary.nvim',
   -- 代码高亮
   "nvim-treesitter/nvim-treesitter", build = ":TSUpdate",
+  "p00f/nvim-ts-rainbow", -- 配合treesitter，不同括号颜色区分
   -- mason
   "williamboman/mason.nvim", build = ":MasonUpdate",
   "williamboman/mason-lspconfig.nvim",
@@ -43,6 +44,17 @@ require("lazy").setup({
   "onsails/lspkind-nvim",
 --  "mhartington/formatter.nvim",
   "psf/black",
+  -- indent-blankline
+  "lukas-reineke/indent-blankline.nvim",
+  "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim",
+  -- 自动补全括号
+  "windwp/nvim-autopairs",
+  -- 添加代码注释
+   "numToStr/Comment.nvim",
+  -- 左侧git提示
+  "lewis6991/gitsigns.nvim", 
+  -- dashboard
+  "glepnir/dashboard-nvim",
 })
 
 

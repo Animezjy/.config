@@ -9,7 +9,7 @@ local list_keys = require('config.mappings').nvimTreeList
 nvim_tree.setup({
     -- 不显示 git 状态图标
     git = {
-        enable = false,
+        enable = true,
     },
     -- project plugin 需要这样设置
     update_cwd = true,
@@ -45,7 +45,7 @@ nvim_tree.setup({
             -- 首次打开大小适配
             resize_window = true,
             -- 打开文件时关闭
-            quit_on_open = true,
+            quit_on_open = false,
         },
     },
     system_open = {

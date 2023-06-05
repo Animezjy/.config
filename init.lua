@@ -27,8 +27,14 @@ require "plugin-config.nvim-tree"
 require "lsp.mason"
 require "lsp.lspconfig"
 -- LSP 代码自动补全
+require "lsp.null-ls"
 require "lsp.cmp"
 require "lsp.ui"
 -- 代码高亮
 require "plugin-config.nvim-treesitter"
-
+-- 缩进线
+require "plugin-config.indent-blankline"
+-- require "plugin-config.dashboard"
+-- 代码括号自动补全
+require "lsp.autopairs"
+require "lsp.comment"
