@@ -54,7 +54,7 @@ require("lazy").setup({
   -- 左侧git提示
   "lewis6991/gitsigns.nvim", 
   -- dashboard
-  "glepnir/dashboard-nvim",
+  -- "glepnir/dashboard-nvim",
 })
 
 
