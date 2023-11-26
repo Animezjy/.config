@@ -18,3 +18,21 @@ map("n", "so", "<C-w>o", opt)
 map("n", "<leader>df", ":lua require('dap-python').test_class()<CR>", opt)
 map("n", "<leader>dn", ":lua require('dap-python').test_method()<CR>", opt)
 map("n", "<leader>ds", "<ESC>:lua require('dap-python').debug_selection()<CR>", opt)
+-- 插入模式
+map("i", "<C-j>", "<DOWN>", opt)
+
+-- lsp saga
+map("n", "gp", "<cmd>Lspsaga peek_definition<CR>", opt)
+map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opt)
+map("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opt) -- jump to previous diagnostic in buffer
+map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opt)
+
+-- hop
+map("n", "<leader>hw", ":HopWord<cr>", opt)
+map("n", "<leader>hww", ":HopWordMW<cr>", opt)
+map("n", "<leader>hc", ":HopChar1<cr>", opt)
+map("n", "<leader>hcw", ":HopChar1MW<cr>", opt)
+
+
+map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opt)
+
