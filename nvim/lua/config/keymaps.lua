@@ -7,6 +7,8 @@ local opt = { noremap = true, silent = true }
 map("n", "Q", ":q!<CR>", opt)
 map("n", "W", ":w<CR>", opt)
 map("n", "S", ":x<CR>", opt)
+map("n", "<c-u>", "4k<CR>", opt)
+map("n", "<c-d>", "4j<CR>", opt)
 
 -- 分屏
 map("n", "sv", ":vsp<CR>", opt)
@@ -33,6 +35,10 @@ map("n", "<leader>hww", ":HopWordMW<cr>", opt)
 map("n", "<leader>hc", ":HopChar1<cr>", opt)
 map("n", "<leader>hcw", ":HopChar1MW<cr>", opt)
 
-
 map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opt)
 
+-- telescope
+
+map("n", "<c-f>", "<cmd>lua require('telescope.builtin').find_files()<CR>", opt)
+map("n", "<c-p>", "<cmd>lua require('telescope.builtin').live_grep()<CR>", opt)
+map("n", "<c-e>", "<cmd>lua require('telescope.builtin').oldfiles()<CR>", opt)

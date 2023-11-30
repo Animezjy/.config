@@ -7,6 +7,7 @@ return {
       vim.keymap.set("n", "<F12>", '<cmd>lua require"dap".step_out()<CR>')
       vim.keymap.set("n", "<F5>", '<cmd>lua require"dap".continue()<CR>')
       vim.keymap.set("n", "<leader>db", '<cmd>lua require"dap".toggle_breakpoint()<CR>')
+      vim.keymap.set("n", "<leader>ds", '<cmd>lua require"dap".clear_breakpoints()<CR>')
       vim.keymap.set(
         "n",
         "<leader>dc",
@@ -53,7 +54,7 @@ return {
       })
     end,
   },
-
+  -- python adapter
   {
     "mfussenegger/nvim-dap-python",
     dependencies = {

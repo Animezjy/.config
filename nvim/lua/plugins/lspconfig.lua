@@ -10,4 +10,13 @@ return {
   opts = function()
     vim.g.autoformat = false
   end,
+  settings = {
+    Lua = {
+      hint = {
+        enable = true,
+        arrayIndex = true,
+        setType = true,
+      },
+    },
+  },
 }
