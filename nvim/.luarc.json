@@ -1,0 +1,12 @@
+{
+    "diagnostics.globals": [
+        "fsdafafda",
+        "fsdafaaff"
+    ],
+    "diagnostics.disable": [
+        "missing-fields",
+        "undefined-global",
+        "inject-field",
+        "undefined-doc-name"
+    ]
+}
